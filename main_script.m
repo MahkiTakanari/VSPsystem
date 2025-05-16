@@ -1,9 +1,9 @@
 % === 初期化 ===
 numTrials = 3; % 必要なら input() で変更可
 deviceID = "Dev1";
-rate = 8192;
+rate = 8192; % サンプリング周波数
 initDaq(deviceID, rate, "daqObj");
-fg = initializeFG("COM5");          % FGのシリアルポートを指定
+initFG("COM5", fg);          % FGのシリアルポートを指定
 
 % === 試行ループ ===
 for trial = 1:numTrials
