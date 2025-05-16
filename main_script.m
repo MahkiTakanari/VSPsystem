@@ -2,7 +2,8 @@
 numTrials = 3; % 必要なら input() で変更可
 deviceID = "Dev1";
 rate = 8192; % サンプリング周波数
-initDaq(deviceID, rate, "daqObj");
+maxduration = 180; % 1試行の測定にかかる最大時間
+initDaq(deviceID, rate, "daqObj", maxduration);
 initFG("COM5", fg);          % FGのシリアルポートを指定
 
 % === 試行ループ ===
