@@ -1,19 +1,19 @@
-function initFG(portName, label)
-% initFG - ファンクションジェネレータ（WF1974）へのシリアル接続を初期化
-% portName: 例 "COM5"
-% label: 呼び出し元で使用する変数名（例："fg"）
+function initFG(visaAddress, label)
+% initFG - visadev を使って WF1974 に接続し、呼び出し元にオブジェクトを作成
+% visaAddress: 例 "USB0::0x0D4A::0x000E::1234567::INSTR"
+% label: 呼び出し元で使いたい変数名（例："fg"）
 
     % すでに有効な接続があれば再利用
     if evalin("caller", sprintf("exist('%s', 'var') && isvalid(%s)", label, label))
-        fprintf("REUSE: %s (port: %s)\n", label, portName);
+        fprintf("REUSE: %s (VISA: %s)\n", label, visaAddress);
         return;
     end
 
     % シリアルポートオブジェクトを作成
-    fg = serialport(portName, 9600);  % WF1974 のデフォルトボーレート（変更時は調整）
-    configureTerminator(fg, "CR/LF");
+    fg = visadev(visaAddress);
+    configureTerminator(fg, "LF");
     flush(fg);  % バッファクリア
 
     assignin("caller", label, fg);
-    fprintf("SET: %s (port: %s)\n", label, portName);
+    fprintf("SET: %s (VISA: %s)\n", label, visaAddress);
 end
