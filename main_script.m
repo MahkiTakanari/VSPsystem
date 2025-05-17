@@ -9,6 +9,7 @@ initAmp = 0.0;           % 初期振幅
 ampStep = 0.5;           % 振幅の増加ステップ（V）
 ampMax = 5.0;            % 最大振幅（V）
 numTrials = 3;           % 試行回数
+saveDir = "data";        % 保存するフォルダ名,作業ディレクトリからのパスを指定
 
 % === 初期化 ===
 initDaq(daqDevice, fs, "daqObj", duration);
@@ -30,8 +31,8 @@ for trial = 1:numTrials
     pause(10);
 
     % データ保存
-    saveTrialCSV(trial, data);
-    saveTriggerTime(trial, triggerTime);
+    saveTrialCSV(trial, data, saveDir);
+    saveTriggerTime(trial, triggerTime, saveDir);
 
     stopFG(fg);
 
