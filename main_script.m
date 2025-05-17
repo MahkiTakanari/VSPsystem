@@ -24,7 +24,7 @@ for trial = 1:numTrials
 
     % 振幅上昇＋トリガ検出＋データ取得
     [data, triggerTime, ampWhenTriggered] = ...
-        stepFGAmplitudeUntilTrigger(fg, daqObj, fs, ampStep, ampMax);
+        stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax);
 
     % トリガ後10秒間その振幅で保持
     fprintf("Holding %.1f V for 10 seconds...\n", ampWhenTriggered);
