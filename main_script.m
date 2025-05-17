@@ -1,12 +1,18 @@
 % === 初期化 ===
-numTrials = 3; % 必要なら input() で変更可
+
 deviceID = "Dev1";
-rate = 8192; % サンプリング周波数
 maxduration = 180; % 1試行の測定にかかる最大時間
 visaAddress = "USB0::0x0D4A::0x000E::9113588::INSTR";
 
+numTrials = 3; % 必要なら input() で変更可
+rate = 8192; % サンプリング周波数
+freqHz = 100;     % 周波数 [Hz]
+initAmp = 0.0;    % 初期振幅 [Vpp]
+
 initDaq(deviceID, rate, "daqObj", maxduration);
 initFG(visaAddress, "fg");
+
+setupFG(fg, freqHz, initAmp);
 
 
 % === 試行ループ ===
