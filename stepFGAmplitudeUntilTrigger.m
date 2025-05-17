@@ -1,22 +1,20 @@
 function [data, triggerTime, ampWhenTriggered] = ...
     stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax)
-% stepFGAmplitudeUntilTrigger - 振幅を1秒ごとに増加し、スイッチ反応で停止
+% stepFGAmplitudeUntilTrigger - 振幅を1秒ごとに変化させ、スイッチ反応で停止
 %
 % 入力:
 %   fg       : visadev オブジェクト
 %   daqObj   : DAQ セッションオブジェクト
-%   fs       : サンプリング周波数 [Hz]
-%   ampStep  : 振幅増加ステップ [V]
-%   ampMax   : 最大振幅 [V]
+%   initAmp  : 初期振幅 [V]（0なら上昇、1以上なら下降）
+%   ampStep  : 振幅変化ステップ [V]
+%   ampMax   : 上昇時の最大振幅 [V]
 %
 % 出力:
 %   data              : Nx3 行列 [time, acc, sw]
 %   triggerTime       : スイッチが押された時刻 [s]（NaN なら未反応）
 %   ampWhenTriggered  : トリガ時の振幅 [V]
 
-    % 固定しきい値
-    threshold = 1.5;  % [V]
-
+    threshold = 1.5;  % スイッチしきい値 [V]
     % 記録用バッファ
     accAll = [];
     swAll  = [];
@@ -25,14 +23,21 @@ function [data, triggerTime, ampWhenTriggered] = ...
     tStart = tic;
     triggered = false;
 
-    for amp = initAmp : ampStep : ampMax
-        % 振幅を更新
-        writeline(fg, sprintf(":PHAS 90"));  % 中心からスタート
+    % シーケンス生成：上昇 or 下降
+    if initAmp == 0
+        ampSeq = initAmp : ampStep : ampMax;
+    else
+        ampSeq = initAmp : -ampStep : 0;
+    end
+
+    for amp = ampSeq
+        % 振幅設定
+        writeline(fg, ":PHAS 90");
         writeline(fg, sprintf(":VOLT:AMPL %.3f", amp));
         fprintf("振幅設定: %.3f V\n", amp);
 
         % 1秒間データ取得
-        d = read(daqObj, seconds(1.0), "OutputFormat", "Matrix");  % Nx2
+        d = read(daqObj, seconds(1.0), "OutputFormat", "Matrix"); % Nx2行列
         n = size(d,1);
         tNow = toc(tStart);
         tSegment = linspace(tNow - 1, tNow, n)';
@@ -51,12 +56,21 @@ function [data, triggerTime, ampWhenTriggered] = ...
             triggered = true;
             break;
         end
+
+        % 下降終了条件（未トリガで0V到達）
+        if initAmp >= 1.0 && amp <= 0
+            triggerTime = NaN;
+            ampWhenTriggered = amp;
+            fprintf("⚠ 下降系列: ampが0Vに到達（トリガ未検出）\n");
+            break;
+        end
     end
 
-    if ~triggered
+    % 上昇系列でトリガ未検出だった場合
+    if ~triggered && initAmp == 0
         triggerTime = NaN;
-        ampWhenTriggered = amp;  % 最終振幅
-        fprintf("トリガ未検出（最大振幅 %.1f V）\n", ampWhenTriggered);
+        ampWhenTriggered = amp;
+        fprintf("⚠ 上昇系列: トリガ未検出（最終振幅 %.2f V）\n", ampWhenTriggered);
     end
 
     data = [tAll, accAll, swAll];
