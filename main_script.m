@@ -3,8 +3,11 @@ numTrials = 3; % 必要なら input() で変更可
 deviceID = "Dev1";
 rate = 8192; % サンプリング周波数
 maxduration = 180; % 1試行の測定にかかる最大時間
+visaAddress = "USB0::0x0D4A::0x000E::9113588::INSTR";
+
 initDaq(deviceID, rate, "daqObj", maxduration);
-initFG("COM5", fg);          % FGのシリアルポートを指定
+initFG(visaAddress, "fg");
+
 
 % === 試行ループ ===
 for trial = 1:numTrials
