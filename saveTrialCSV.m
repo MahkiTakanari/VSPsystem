@@ -12,7 +12,7 @@ function saveTrialCSV(trial, data, folder)
     end
 
     filename = fullfile(folder, sprintf("trial%d.csv", trial));
-    T = array2table(data, "VariableNames", {"Time_s", "Accel_V", "Switch_V"});
+    T = array2table(data, 'VariableNames', {'Time_s', 'Accel_V', 'Switch_V'});
     writetable(T, filename);
     fprintf("データ保存: %s\n", filename);
 end
