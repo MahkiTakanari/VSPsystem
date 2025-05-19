@@ -12,7 +12,7 @@ numTrials = 3;           % 試行回数
 saveDir = "data";        % 保存するフォルダ名,作業ディレクトリからのパスを指定
 
 % === 初期化 ===
-initDaq(daqDevice, fs, "daqObj", duration);
+initDaq(daqDevice, fs, "daqObj");
 initFG(visaAddress, "fg");
 setupFG(fg, freqHz, initAmp);
 
