@@ -8,6 +8,7 @@ function setupFG(fg, freqHz, initAmp)
     fprintf("\n========== FG SETUP ==========\n");
     % リセット
     writeline(fg, '*RST');
+    writeline(fg, ":OUTP OFF");
     fprintf("✔ Reset complete\n");
 
     % 波形とスケーリングの設定
@@ -22,4 +23,5 @@ function setupFG(fg, freqHz, initAmp)
     writeline(fg, sprintf(':VOLT:AMPL %.3f', initAmp));
     fprintf("✔ Initial amplitude: %.2f V\n", initAmp);
     fprintf("================================\n\n");
+    pause(3)
 end
