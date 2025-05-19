@@ -47,7 +47,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
         tAll   = [tAll;   tSegment];
 
         % トリガ検出
-        trigIdx = find(d(:,2) > threshold, 1);
+        trigIdx = find(d(:,2) < threshold, 1);
         if ~isempty(trigIdx)
             absIdx = length(swAll) - n + trigIdx;
             triggerTime = tAll(absIdx);
