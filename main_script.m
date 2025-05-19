@@ -34,7 +34,7 @@ for trial = 1:numTrials
     saveTrialCSV(trial, data, saveDir);
     saveTriggerTime(trial, triggerTime, saveDir);
 
-    stopFG(fg);
+    stopFG(fg, initAmp);
 
     pause(2);  % 次試行までのインターバル
 end
