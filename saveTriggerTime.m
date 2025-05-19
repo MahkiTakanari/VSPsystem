@@ -15,5 +15,5 @@ function saveTriggerTime(trial, triggerTime, folder)
     fid = fopen(filename, "w");
     fprintf(fid, "%.6f\n", triggerTime);  % 数値のみ
     fclose(fid);
-    fprintf("トリガ時刻保存: %s\n", filename);
+    fprintf("SAVED: %s\n", filename);
 end

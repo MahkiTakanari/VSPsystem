@@ -34,7 +34,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
         % 振幅設定
         writeline(fg, ":PHAS 90");
         writeline(fg, sprintf(":VOLT:AMPL %.3f", amp));
-        fprintf("振幅設定: %.3f V\n", amp);
+        fprintf("AMPLITUDE SET: %.3f V\n", amp);
 
         % 1秒間データ取得
         d = read(daqObj, seconds(1.0), "OutputFormat", "Matrix"); % Nx2行列
@@ -52,7 +52,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
             absIdx = length(swAll) - n + trigIdx;
             triggerTime = tAll(absIdx);
             ampWhenTriggered = amp;
-            fprintf("トリガ検出: %.3f s @ %.2f V\n", triggerTime, amp);
+            fprintf("\nTRIGGER DETECTED: %.3f s @ %.2f V\n", triggerTime, amp);
             triggered = true;
             break;
         end

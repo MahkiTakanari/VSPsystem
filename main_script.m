@@ -18,7 +18,7 @@ setupFG(fg, freqHz, initAmp);
 
 % === 試行ループ ===
 for trial = 1:numTrials
-    fprintf("\n===== Trial %d =====\n", trial);
+    fprintf("\n===== [ Trial %d ] =====\n", trial);
 
     startFG(fg);
 
@@ -27,7 +27,7 @@ for trial = 1:numTrials
         stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax);
 
     % トリガ後10秒間その振幅で保持
-    fprintf("Holding %.1f V for 10 seconds...\n", ampWhenTriggered);
+    fprintf("HOLDING: Maintaining %.2f V for 10 seconds...\n\n", ampWhenTriggered);
     pause(10);
 
     % データ保存
