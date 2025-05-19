@@ -61,7 +61,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
         if initAmp >= 1.0 && amp <= 0
             triggerTime = NaN;
             ampWhenTriggered = amp;
-            fprintf("⚠[WARN] DESCENDING seq.: reached 0 V without trigger.\n");
+            fprintf("⚠[WARN] DESCENDING SEQ.: reached 0 V WITHOUT trigger.\n");
             break;
         end
     end
@@ -70,7 +70,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
     if ~triggered && initAmp == 0
         triggerTime = NaN;
         ampWhenTriggered = amp;
-        fprintf("⚠[WARN] ASCENDING seq.: no trigger detected (final amplitude: %.2f V)\n", ampWhenTriggered);
+        fprintf("⚠[WARN] ASCENDING SEQ.: NO trigger detected (final amplitude: %.2f V)\n", ampWhenTriggered);
     end
 
     data = [tAll, accAll, swAll];
