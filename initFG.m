@@ -5,15 +5,19 @@ function initFG(visaAddress, label)
 
     % すでに有効な接続があれば再利用
     if evalin("caller", sprintf("exist('%s', 'var') && isvalid(%s)", label, label))
-        fprintf("REUSE: %s (VISA: %s)\n", label, visaAddress);
+        fprintf("[REUSE] FG object '%s' (VISA: %s)\n\n", label, visaAddress);
         return;
     end
 
-    % シリアルポートオブジェクトを作成
+    % FGオブジェクトの作成
+    fprintf("[CONNECTING] Establishing VISA connection to FG...\n");
+    % if ~isempty(visadevfind)
+    %     delete(visadevfind);
+    % end
     fg = visadev(visaAddress);
     configureTerminator(fg, "LF");
     flush(fg);  % バッファクリア
 
     assignin("caller", label, fg);
-    fprintf("SET: %s (VISA: %s)\n", label, visaAddress);
+    fprintf("[SET] FG object '%s' (VISA: %s) created and ready.\n\n", label, visaAddress);
 end

@@ -6,16 +6,17 @@ function initDaq(deviceID, rate, label)
 % durationa: BuuferSize を指定するのに使用
 
     if evalin("caller", sprintf("exist('%s', 'var') && isvalid(%s)", label, label))
-        fprintf("REUSE: %s (device: %s)\n", label, deviceID);
+        fprintf("[REUSE] DAQ object '%s' (device: %s)\n\n", label, deviceID);
         return;
     end
 
     % 新規作成
+    fprintf("[CONNECTING] Initializing DAQ session...\n");
     daqObj = daq("ni");
     daqObj.Rate = rate;
     addinput(daqObj, deviceID, "ai0", "Voltage");
     addinput(daqObj, deviceID, "ai1", "Voltage");
 
     assignin("caller", label, daqObj);
-    fprintf("SET: %s (device: %s)\n", label, deviceID);
+    fprintf("[SET] DAQ object '%s' (device: %s) created and ready.\n\n", label, deviceID);
 end

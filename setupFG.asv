@@ -5,21 +5,19 @@ function setupFG(fg, freqHz, initAmp)
 % freqHz   : 設定する周波数 [Hz]
 % initAmp  : 初期振幅 [Vpp]
 
-    fprintf("\n========== FG SETUP ==========\n");
     % リセット
     writeline(fg, '*RST');
-    fprintf("✔ Reset complete\n");
+    fprintf("RESET: Function generator settings reset.\n");
 
     % 波形とスケーリングの設定
     writeline(fg, ':OUTP:SCAL SIN,PFS');
-    fprintf("✔ Waveform set to SIN with +FS\n");
+    fprintf("WAVEFORM: Set to SIN with +FS scaling.\n");
 
     % 周波数設定
     writeline(fg, sprintf(':FREQ %.3f', freqHz));
-    fprintf("✔ Frequency: %.1f Hz\n", freqHz);
+    fprintf("FREQ: Set to %.2f Hz.\n", freqHz);
 
     % 初期振幅設定
     writeline(fg, sprintf(':VOLT:AMPL %.3f', initAmp));
-    fprintf("✔ Initial amplitude: %.2f V\n", initAmp);
-    fprintf("================================\n\n");
+    fprintf("AMPLITUDE: Set initial amplitude to %.2f V.\n", initAmp);
 end
