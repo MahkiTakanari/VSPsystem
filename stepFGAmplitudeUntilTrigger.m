@@ -61,7 +61,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
         if initAmp >= 1.0 && amp <= 0
             triggerTime = NaN;
             ampWhenTriggered = amp;
-            fprintf("⚠ 下降系列: ampが0Vに到達（トリガ未検出）\n");
+            fprintf("⚠[WARN] DESCENDING seq.: reached 0 V without trigger.\n");
             break;
         end
     end
@@ -70,7 +70,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
     if ~triggered && initAmp == 0
         triggerTime = NaN;
         ampWhenTriggered = amp;
-        fprintf("⚠ 上昇系列: トリガ未検出（最終振幅 %.2f V）\n", ampWhenTriggered);
+        fprintf("⚠[WARN] ASCENDING seq.: no trigger detected (final amplitude: %.2f V)\n", ampWhenTriggered);
     end
 
     data = [tAll, accAll, swAll];
