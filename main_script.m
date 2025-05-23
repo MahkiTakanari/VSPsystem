@@ -4,12 +4,12 @@ visaAddress = "USB0::0x0D4A::0x000E::9113588::INSTR";  % FGのVISAアドレス
 daqDevice = "Dev1";      % DAQデバイス名
 fs = 8192;               % サンプリング周波数
 duration = 180;          % 最大記録時間（上限）
-freqHz = 100;            % 出力波の周波数
+freqHz = 125;            % 出力波の周波数
 initAmp = 0;             % 初期振幅
 ampStep = 0.05;          % 振幅の増加ステップ（V）
 ampMax = 5.0;            % 最大振幅（V）
 numTrials = 3;           % 試行回数
-saveDir = "../data";     % 保存するフォルダ名,作業ディレクトリからのパスを指定
+saveDir = "../subA/31.5Hz/asc/index/r";     % 保存するフォルダ名,作業ディレクトリからのパスを指定
 
 % === 初期化 ===
 initDaq(daqDevice, fs, "daqObj");
