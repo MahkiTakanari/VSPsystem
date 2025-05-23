@@ -1,0 +1,6 @@
+# OS関連
+.DS_Store
+Thumbs.db
+
+# MATLAB
+*.asv
