@@ -19,6 +19,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
     accAll = [];
     swAll  = [];
     tAll   = [];
+    ampAll = [];
 
     tStart = tic;
     triggered = false;
@@ -45,6 +46,7 @@ function [data, triggerTime, ampWhenTriggered] = ...
         accAll = [accAll; d(:,1)];
         swAll  = [swAll;  d(:,2)];
         tAll   = [tAll;   tSegment];
+        ampAll = [ampAll; repmat(amp, n, 1)];
 
         % トリガ検出
         trigIdx = find(d(:,2) < threshold, 1);
@@ -73,5 +75,5 @@ function [data, triggerTime, ampWhenTriggered] = ...
         fprintf("⚠[WARN] ASCENDING SEQ.: NO trigger detected (final amplitude: %.2f V)\n", ampWhenTriggered);
     end
 
-    data = [tAll, accAll, swAll];
+    data = [tAll, ampAll, accAll, swAll];
 end
