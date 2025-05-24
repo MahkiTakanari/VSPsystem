@@ -1,5 +1,5 @@
-function [data, triggerTime, ampWhenTriggered, stimDelay] = ...
-    stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax, tSync)
+function [data, triggerTime, ampWhenTriggered] = ...
+    stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax)
 % stepFGAmplitudeUntilTrigger - 振幅を1秒ごとに変化させ、スイッチ反応で停止
 %
 % 入力:
@@ -21,6 +21,7 @@ function [data, triggerTime, ampWhenTriggered, stimDelay] = ...
     tAll   = [];
     ampAll = [];
 
+    tStart = tic;
     triggered = false;
 
     % シーケンス生成：上昇 or 下降
@@ -30,10 +31,6 @@ function [data, triggerTime, ampWhenTriggered, stimDelay] = ...
         ampSeq = initAmp : -ampStep : 0;
     end
 
-    stimDelay = toc(tSync);  % flashWindowWithSync からの差分時間 [秒]
-    
-    tStart = tic; % 内部クロック
-    
     for amp = ampSeq
         % 振幅設定
         writeline(fg, ":PHAS 90");

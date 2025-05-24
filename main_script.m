@@ -20,14 +20,11 @@ setupFG(fg, freqHz, initAmp);
 for trial = 1:numTrials
     fprintf("\n===== [ Trial %d ] =====\n", trial);
 
-    tSync = flashWindowWithSync();  % NIRSと同期する基準時刻
-
     startFG(fg);
 
     % 振幅上昇＋トリガ検出＋データ取得
-    [data, triggerTime, ampWhenTriggered, stimDelay] = ...
-        stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax, tSync);
-    
+    [data, triggerTime, ampWhenTriggered] = ...
+        stepFGAmplitudeUntilTrigger(fg, daqObj, initAmp, ampStep, ampMax);
 
     % トリガ後10秒間その振幅で保持
     fprintf("HOLDING: Maintaining %.2f V for 10 seconds...\n\n", ampWhenTriggered);
