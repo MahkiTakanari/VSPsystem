@@ -35,7 +35,8 @@ for trial = 1:numTrials
 
     % データ保存
     saveTrialCSV(trial, data, saveDir);
-    saveTriggerTime(trial, triggerTime, saveDir);
+    saveTrialMetaCSV(trial, triggerTime, ampWhenTriggered, stimDelay, saveDir);
+
 
     stopFG(fg, initAmp);
 
